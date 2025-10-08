@@ -1,0 +1,37 @@
+我想要一个备份工具容器
+
+将服务器`ssh -p 19020 root@192.168.100.1`上的文件夹`/pig-workdir/pig-services`定期镜像备份到指定的目录中。
+该服务器是生产环境服务器，备份不得影响生产环境服务器的正常运行。
+
+该目录结构大致如下：
+```
+root@DESKTOP-B00BRA8:/pig-workdir/pig-services# ll
+total 16
+drwxr-xr-x 4 root root 4096 Oct  8 12:52 ./
+drwxr-xr-x 4 root root 4096 Oct  8 12:50 ../
+drwxr-xr-x 3 root root 4096 Oct  7 20:46 minecraft/
+drwxr-xr-x 4 root root 4096 Oct  8 12:55 services/
+root@DESKTOP-B00BRA8:/pig-workdir/pig-services# du -h -d 1
+3.8G    ./services
+160M    ./minecraft
+4.0G    .
+root@DESKTOP-B00BRA8:/pig-workdir/pig-services# cd services/
+root@DESKTOP-B00BRA8:/pig-workdir/pig-services/services# ll
+total 20
+drwxr-xr-x 4 root root 4096 Oct  8 12:55 ./
+drwxr-xr-x 4 root root 4096 Oct  8 12:52 ../
+-rw-r--r-- 1 root root 2036 Oct  8 12:56 docker-compose.yaml
+drwxr-xr-x 3 root root 4096 Mar  9  2025 music-tag/
+drwxr-xr-x 4 root root 4096 Mar  9  2025 navidrome/
+root@DESKTOP-B00BRA8:/pig-workdir/pig-services/services# du -h -d 1
+3.8G    ./navidrome
+2.6M    ./music-tag
+3.8G    .
+```
+
+要求增量备份，减少网络用量
+
+写成一个 dockerfile 文件，方便使用
+
+通过环境变量配置常用参数，比如备份目录，备份间隔，备份文件名，远程服务器参数等
+

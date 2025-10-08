@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  ssh-backup:
+    build: .
+    container_name: ssh-backup
+    restart: unless-stopped
+    # 连接到默认bridge网络
+    network_mode: "bridge"
+    # 加载环境变量文件
+    env_file:
+      - .env
+    volumes:
+      # 挂载备份存储目录
+      - ./backup_data:/backup
+      # 挂载SSH密钥文件 (请将您的私钥文件命名为id_rsa并放在当前目录)
+      #- ./id_rsa:/app/ssh_key:ro
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "backup.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

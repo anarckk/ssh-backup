@@ -1,0 +1,19 @@
+# 忽略备份数据
+backup_data/
+
+# 忽略环境文件（生产环境使用）
+.env
+
+# 忽略日志文件
+*.log
+
+# 忽略临时文件
+tmp/
+temp/
+
+# 忽略版本控制
+.git/
+.gitignore
+
+# 忽略文档
+README.md
